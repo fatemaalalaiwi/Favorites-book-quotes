@@ -49,12 +49,12 @@ app.get("/", async (req, res) => {
 const authController = require("./controllers/auth");
 app.use("/auth", authController);
 
+const BookController = require("./controllers/books");
+app.use("/books",isSignedIn,BookController );
 
-// Route - Just for testing purpose
-// VIP-lounge
-app.get("/vip-lounge", isSignedIn, (req, res) => {
-  res.send(`Welcome to the party`);
-});
+const QuotesController = require("./controllers/quotes");
+app.use("/quotes",isSignedIn,QuotesController );
+
 
 
 app.listen(port, () => {
