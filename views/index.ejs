@@ -3,23 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auth Application</title>
+    <title>Book Application</title>
 </head>
 
-
 <body>
-    <nav>
-    <% if (user) { %>
-        <!-- if there is users from local -->
-      <h1>Welcome to the App! <%= user.username %></h1>
-      <a href="/auth/sign-out">Sign out</a>
-    <% } else { %>
-      <h1>Welcome to the app, guest.</h1>
-      <a href="/auth/sign-up">Sign up</a>
-      <a href="/auth/sign-in">Sign in</a>
-    <% } %>
+  <%- include ('./partials/_navbar.ejs') %> 
+   <img src="/img/3.png" alt="Banner Image" class="banner"><br>
+  <h1>Welcome To Books Quotes app</h1>
 
-      <p></p><a href="/vip-lounge">Get into the VIP users only lounge!</a></p>
-  </nav>
+  
 </body>
 </html>

@@ -1,0 +1,26 @@
+<%- include('../partials/_navbar.ejs') %>
+  
+   <!-- <img src="/images/banner.png" alt="Banner Image" class="banner"><br><br> -->
+<h1>Add a new Book</h1>
+  
+  <form method="POST" action="/books">
+    <label for="bookImage">book Image:</label>
+    <input type="file" name="image" accept="image/*" required class="custom-file-input"/><br> 
+    
+    
+    <br>
+
+    <label for="BookName">Book Name:</label>
+    <input type="text" name="BookName" id="BookName" />
+    <br>
+
+    <label for="Author">Author:</label>
+    <input type="text" name="Author" id="Author"  />
+    <br>
+
+    <label for="bookQuotes:">bookQuotes::</label>
+    <input type="text" name="bookQuotes:" id="bookQuotes:" />
+    <br>
+    
+    <button type="submit">Add Book</button>
+  </form>

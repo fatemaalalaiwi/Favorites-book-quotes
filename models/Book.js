@@ -11,20 +11,15 @@ bookImage: {
     type: String
   },
 
-  Owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+  BookName: {
+   type: String
   },
 
   bookQuotes: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Quetes'
   },
-    size: {
-    type: Number,
-    required: true,
-    min: 0
-  },
+
 //   one to many relation
   owner: {
     type: mongoose.Schema.Types.ObjectId,

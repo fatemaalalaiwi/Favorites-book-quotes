@@ -40,10 +40,11 @@ app.use(
 app.use(passUserToView);
 
 // GET (index page)
-app.get("/", async (req, res) => {
-  res.render("index.ejs");
+app.get("/", async(req, res) => {
+  res.render("index.ejs", {
+    user: req.session.user,
+  });
 });
-
 // Require Controller to link with server.js // we export it from auth.js file in controllers folder
 // Express will now funnel any requests starting with /auth to the authController
 const authController = require("./controllers/auth");

@@ -1,0 +1,20 @@
+
+
+<%- include("../partials/_navbar.ejs")  %>
+
+<img src="/img/3.png" alt="Banner Image" class="banner"><br>
+<h1>Here's all the Books</h1>
+<ul>
+  <% books.forEach(book => { %>
+    <li>
+        <%= book.bookImage %><br>
+      A  
+      <%= book.BookName %> by <br>
+      <%= book.Author %> 
+      Add by
+      <%= book.owner.username %>
+      <a href="/books/<%= book._id %>">View all Quotes</a> 
+    </li>
+  <% }) %>
+</ul>
+<a href="/books/new">Add a new book</a>
