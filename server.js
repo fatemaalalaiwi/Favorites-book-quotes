@@ -26,7 +26,7 @@ app.use(methodOverride("_method"));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
 
-// Session Configurations
+
 
 //secret key
 // Session Configurations
@@ -45,6 +45,7 @@ app.get("/", async(req, res) => {
     user: req.session.user,
   });
 });
+
 // Require Controller to link with server.js // we export it from auth.js file in controllers folder
 // Express will now funnel any requests starting with /auth to the authController
 const authController = require("./controllers/auth");
