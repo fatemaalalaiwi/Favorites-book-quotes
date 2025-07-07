@@ -8,13 +8,13 @@
   <% books.forEach(book => { %>
     <li>
         <%= book.bookImage %><br>
-      A  
-      <%= book.BookName %> by <br>
-      <%= book.Author %> 
+      <br>
+      Book name: <%= book.BookName %> <br>
+      Autor: <%= book.Author %> <br>
       Add by
-      <%= book.owner.username %>
-      <a href="/books/<%= myBook._id %>">View all Quotes</a> 
-    </li>
+      <%= book.owner.username %> <br>
+      <a href="/books/<%= book._id %>">View all Quotes</a> <br><br>
   <% }) %>
 </ul>
+<br><br><br>
 <a href="/books/new">Add a new book</a>

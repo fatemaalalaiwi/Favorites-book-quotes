@@ -15,10 +15,10 @@ bookImage: {
    type: String
   },
 
-  bookQuotes: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Quetes'
-  },
+  // bookQuotes: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Quote'
+  // },
 
 //   one to many relation
   owner: {

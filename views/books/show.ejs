@@ -3,9 +3,29 @@
 
   <!-- display All Quotes -->
      
-  <h2>Quotes</h2>
-  <h1> <%= myBook.bookQuotes %></h1>
-  <p> Add by: $<%= myBook.owner.username  %></p>
+ 
+
+
+<h3>Add a Quote to this Book</h3>
+
+
+   <h2>📚 Quotes for this Book</h2>
+<% if (bookQuotes.length > 0) { %>
+  <ul>
+    <% bookQuotes.forEach(quote => { %>
+      <li>
+        "<%= quote.QuoteLine %>" 
+        
+        <!-- — added by <%= quote.user.username %> <br> -->
+
+
+
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No quotes for this book yet.</p>
+<% } %>
+
 
 
     <br>
@@ -16,19 +36,19 @@
       <button type="submit">dont like !</button>
     </form>
   <% } else { %>
-    <p>You dont like this quote!</p>
+    <p>You Don't like this quote?</p>
     <form action="/books/<%= myBook._id %>/favorited-by/<%= user._id %>" method="POST">
         <button type="submit">Like!</button>
       </form>
   <% } %>
 
 
-<p> This quote liked by <%= myBook.favoritedByUser.length %> people.</p>
+<p>❤️ Liked by<%= myBook.favoritedByUser.length %> people.</p>
 
 
   <h2>Authorization</h2>
   <% if (myBook.owner._id.equals(user._id)) { %>
-    <p>You can update and delete</p>
+    <p>You own this post. You can edit or delete it</p>
     <a href="/books/<%= myBook._id %>/edit">Edit this page</a>
     <form action="/books/<%= myBook._id %>?_method=DELETE" method="POST">
       <button type="submit">Delete this page</button>

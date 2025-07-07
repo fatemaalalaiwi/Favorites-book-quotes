@@ -10,7 +10,7 @@ router.get('/profile', async (req, res) => {
     }).populate('owner');
 
     const myFavoriteListings = await Book.find({
-      favoritedByUsers: req.session.user._id,
+      favoritedByUser: req.session.user._id,
     }).populate('owner');
 
     // console.log('myListings:', myListings);

@@ -28,7 +28,18 @@ router.get('/new', async(req,res) =>{
 router.post('/', async(req,res) =>{
 //it will give the current id of user and assin it to owner
 req.body.owner = req.session.user._id;
-await Book.create(req.body);
+
+const newBook = await Book.create(req.body);
+
+    if (req.body.bookQuotes && req.body.bookQuotes.trim() !== '') {
+      const Quote = require('../models/Quote');
+
+      await Quote.create({
+        QuoteLine: req.body.bookQuotes, 
+        book: newBook._id,
+        user: req.session.user._id,
+      });
+    }
 res.redirect('/books');
 
 });
@@ -40,13 +51,23 @@ res.redirect('/books');
 //  we’ll need to populate() the owner path anytime we wish to display information about an owner beyond an ObjectId.
 router.get("/:bookId", async (req,res)=>{
          const myBook = await Book.findById(req.params.bookId).populate('owner');
+
+// use it to display quotes in view
+         const bookQuotes = await Quote.find({ book: req.params.bookId }).populate('user');
+
+
 // The some() array method returns true if at least one element passes the test 
         const userHasFavorited = myBook.favoritedByUser.some((user)=>
         user.equals(req.session.user._id)
     );
+
+
     // console.log("userHasFavorited", userHasFavorited)
-    res.render('books/show.ejs', {myBook, userHasFavorited});
-    
+    res.render('books/show.ejs', {myBook,
+       userHasFavorited,
+        bookQuotes,
+         user: req.session.user });
+
 });
 
 
@@ -57,10 +78,10 @@ router.get("/:bookId", async (req,res)=>{
 // deleteOne() removes that document from the database
 router.delete('/:bookId', async (req, res) => {
   try {
-    const myBook = await Book.findById(req.params.listingId);
+    const myBook = await Book.findById(req.params.bookId);
     if (myBook.owner.equals(req.session.user._id)) {
       await myBook.deleteOne();
-      res.redirect('/book');
+      res.redirect('/books');
     } else {
       res.send("You don't have permission to delete that.");
     }
@@ -75,7 +96,7 @@ router.delete('/:bookId', async (req, res) => {
 router.get('/:bookId/edit', async (req, res) => {
   try {
     const currentBook = await Book.findById(req.params.bookId);
-    res.render('book/edit.ejs', {
+    res.render('books/edit.ejs', {
       myBook: currentBook,
     });
   } catch (error) {
@@ -94,7 +115,7 @@ router.put('/:bookId', async (req, res) => {
     const currentBook = await Book.findById(req.params.bookId);
     if (currentBook.owner.equals(req.session.user._id)) {
       await currentBook.updateOne(req.body);
-      res.redirect('/book');
+      res.redirect('/books');
     } else {
       res.send("You don't have permission to do that.");
     }
@@ -111,7 +132,7 @@ router.post('/:bookId/favorited-by/:userId', async (req,res)=>{
     await Book.findByIdAndUpdate(req.params.bookId, {
     $push:{favoritedByUser: req.params.userId}
 }) ;
-res.redirect(`/book/${req.params.bookId}`);
+res.redirect(`/books/${req.params.bookId}`);
 });
 
 
@@ -123,7 +144,7 @@ router.delete('/:bookId/favorited-by/:userId', async (req,res)=>{
 });
 
 
-res.redirect(`/book/${req.params.bookId}`);
+res.redirect(`/books/${req.params.bookId}`);
 });
 
 
