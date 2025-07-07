@@ -3,7 +3,7 @@
 <%- include("../partials/_navbar.ejs")  %>
 
 <img src="/img/3.png" alt="Banner Image" class="banner"><br>
-<h1>Here's all the Books</h1>
+<h1>Here's all the Books 📚</h1>
 <ul>
   <% books.forEach(book => { %>
     <li>
@@ -13,7 +13,7 @@
       <%= book.Author %> 
       Add by
       <%= book.owner.username %>
-      <a href="/books/<%= book._id %>">View all Quotes</a> 
+      <a href="/books/<%= myBook._id %>">View all Quotes</a> 
     </li>
   <% }) %>
 </ul>

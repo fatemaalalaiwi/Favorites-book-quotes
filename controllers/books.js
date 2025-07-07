@@ -37,9 +37,10 @@ res.redirect('/books');
 
 
 // Read one - show page
+//  we’ll need to populate() the owner path anytime we wish to display information about an owner beyond an ObjectId.
 router.get("/:bookId", async (req,res)=>{
          const myBook = await Book.findById(req.params.bookId).populate('owner');
-
+// The some() array method returns true if at least one element passes the test 
         const userHasFavorited = myBook.favoritedByUser.some((user)=>
         user.equals(req.session.user._id)
     );
@@ -53,6 +54,7 @@ router.get("/:bookId", async (req,res)=>{
 
 
 // Delete
+// deleteOne() removes that document from the database
 router.delete('/:bookId', async (req, res) => {
   try {
     const myBook = await Book.findById(req.params.listingId);
@@ -85,6 +87,8 @@ router.get('/:bookId/edit', async (req, res) => {
 
 
 // PUT - Update - put
+// The listingId is correctly passed through req.params.
+// The user object is accessible via req.session.
 router.put('/:bookId', async (req, res) => {
   try {
     const currentBook = await Book.findById(req.params.bookId);
@@ -102,6 +106,7 @@ router.put('/:bookId', async (req, res) => {
 
 
 // PUT - Update - post(favorited by)
+// The $push operator is used to add a new value to an array
 router.post('/:bookId/favorited-by/:userId', async (req,res)=>{
     await Book.findByIdAndUpdate(req.params.bookId, {
     $push:{favoritedByUser: req.params.userId}

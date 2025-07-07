@@ -56,6 +56,9 @@ app.use("/books",isSignedIn,BookController );
 const QuotesController = require("./controllers/quotes");
 app.use("/quotes",isSignedIn,QuotesController );
 
+const usersController = require('./controllers/users.js');
+app.use('/users', isSignedIn, usersController);
+
 
 
 app.listen(port, () => {
