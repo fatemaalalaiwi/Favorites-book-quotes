@@ -6,7 +6,7 @@ const app = express();
 
 // Middlewares
 const mongoose = require("mongoose");// dB
-const methodOverride = require("method-override");//apbate and delete
+const methodOverride = require("method-override");//apdate and delete
 const morgan = require("morgan");
 const session = require("express-session");
 const passUserToView = require('./middleware/pass-user-to-view');// authentication

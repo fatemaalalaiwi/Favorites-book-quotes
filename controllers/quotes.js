@@ -6,6 +6,21 @@ const Quote = require('../models/Quote');
 
 
 
+
+// // edit(Quote)
+// router.put('/:quoteId', async (req, res) => {
+//   try {
+//     const { QuoteLine } = req.body;
+//     await Quote.findByIdAndUpdate(req.params.quoteId, { QuoteLine });
+//     res.redirect('back');
+//   } catch (err) {
+//     console.error(err);
+//     res.redirect('/');
+//   }
+// });
+
+
+
 router.post('/:quoteId/like', async (req, res) => {
   try {
     const quote = await Quote.findById(req.params.quoteId);
@@ -43,7 +58,6 @@ router.post('/:quoteId/unlike', async (req, res) => {
     res.redirect('/');
   }
 });
-
 
 
 

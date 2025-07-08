@@ -1,7 +1,6 @@
 const router = require('express').Router()
-
-//************************ */
 const multer = require('multer');
+
 
 const path = require('path');
 
@@ -14,10 +13,9 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname)); // اسم فريد
   }
 });
-
 const upload = multer({ storage: storage });
 
-//**************************** */
+
 const Book = require('../models/Book');
 const Quote = require('../models/Quote');
 
@@ -40,59 +38,6 @@ router.get('/new', async(req,res) =>{
     res.render('books/new.ejs')
 });
 
-
-
-// create //post
-// router.post('/', async(req,res) =>{
-// //it will give the current id of user and assin it to owner
-// req.body.owner = req.session.user._id;
-
-// const newBook = await Book.create(req.body);
-
-//     if (req.body.bookQuotes && req.body.bookQuotes.trim() !== '') {
-//       const Quote = require('../models/Quote');
-
-//       await Quote.create({
-//         QuoteLine: req.body.bookQuotes, 
-//         book: newBook._id,
-//         user: req.session.user._id,
-//       });
-//     }
-// res.redirect('/books');
-
-// });
-
-// راوتر إضافة كتاب جديد
-// router.post('/', upload.single('bookImage'), async (req, res) => {
-//   try {
-//     const { BookName, Author } = req.body;
-    
-//     
-//     const bookImage = req.file ? 'uploads/' + req.file.filename : '';
-
-//     const newBook = new Book({
-//       BookName,
-//       Author,
-//       bookImage,
-//       owner: req.session.user._id // تأكدي من وجود المستخدم
-//     });
-
-//     await newBook.save();
-
-//         if (req.body.bookQuotes && req.body.bookQuotes.trim() !== '') {
-//       const Quote = require('../models/Quote');
-
-//       await Quote.create({
-//         QuoteLine: req.body.bookQuotes, 
-//         book: newBook._id,
-//         user: req.session.user._id,
-//       });
-//     res.redirect('/books');
-//   } catch (err) {
-//     console.error('Error adding book:', err);
-//     res.status(500).send('Something went wrong while adding the book.');
-//   }
-// });
 
 
 
@@ -130,8 +75,7 @@ router.post('/', upload.single('bookImage'), async (req, res) => {
 
     res.redirect('/books');
   } catch (err) {
-   console.error('Error adding book:', err.message, err.stack);
-
+    console.error('Error adding book:', err);
     res.status(500).send('Something went wrong while adding the book.');
   }
 });
@@ -153,7 +97,7 @@ router.get("/:bookId", async (req,res)=>{
     );
 
 
-    // console.log("userHasFavorited", userHasFavorited)
+    
     res.render('books/show.ejs', {myBook,
        userHasFavorited,
         bookQuotes,
@@ -201,15 +145,33 @@ router.get('/:bookId/edit', async (req, res) => {
 // PUT - Update - put
 // The listingId is correctly passed through req.params.
 // The user object is accessible via req.session.
-router.put('/:bookId', async (req, res) => {
+router.put('/:bookId',upload.single('bookImage') ,async (req, res) => {
   try {
     const currentBook = await Book.findById(req.params.bookId);
+    
     if (currentBook.owner.equals(req.session.user._id)) {
       await currentBook.updateOne(req.body);
       res.redirect('/books');
     } else {
       res.send("You don't have permission to do that.");
     }
+       const updateData = {
+      BookName: req.body.BookName,
+      Author: req.body.Author,
+    };
+
+    // إذا رفعت صورة جديدة، ضفها
+    if (req.file) {
+      updateData.bookImage = 'uploads/' + req.file.filename;
+    }
+
+    // نفذ التحديث
+    await Book.findByIdAndUpdate(req.params.bookId, updateData, { new: true });
+
+    // إعادة التوجيه لصفحة تفاصيل الكتاب
+    res.redirect(`/books/${req.params.bookId}`);
+
+
   } catch (error) {
     console.log(error);
     res.redirect('/');
