@@ -1,14 +1,67 @@
-    <nav>
-    <% if (user) { %>
-        <!-- if there is users from local -->
-      <h1>Welcome to the App! <%= user.username %></h1>
+<nav class="navbar">
+  <% if (user) { %>
+    <h1>Welcome to the App! <%= user.username %></h1>
+    <div class="nav-links">
       <a href="/books">View all Books</a>
       <a href="/users/profile">Profile</a>
       <a href="/auth/sign-out">Sign out</a>
-    <% } else { %>
-      <h1>Welcome to the app, guest.</h1>
+    </div>
+  <% } else { %>
+    <h1>Welcome to the app, guest.</h1>
+    <div class="nav-links">
       <a href="/auth/sign-up">Sign up</a>
       <a href="/auth/sign-in">Sign in</a>
-    <% } %>
-    
-  </nav>
+    </div>
+  <% } %>
+
+ 
+
+</nav>
+
+<style>
+  nav.navbar {
+    margin-top: 30px;
+    background: rgba(245, 240, 250, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(94, 75, 139, 0.3);
+    max-width: 400px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  nav.navbar h1 {
+    font-size: 1.1rem;
+    color: #5e4b8b;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-shadow: 1px 1px 6px rgba(181, 139, 253, 0.7);
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #4c1d95, #7c3aed); /* ألوان بنفسج أغمق */
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.6);
+    transition: all 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    box-shadow: 0 6px 18px rgba(181, 139, 253, 0.7);
+  }
+</style>

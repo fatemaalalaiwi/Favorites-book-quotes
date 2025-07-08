@@ -1,20 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Books index</title>
+  <link rel="stylesheet" href="/styles/main.css">
+
+ 
 
 
-<%- include("../partials/_navbar.ejs")  %>
+</head>
+<body>
+<%- include('../partials/_navbar.ejs') %>
+  <div class="container">
+    <h1>Books Library</h1>
+    
+    <ul class="book-list">
+      <% books.forEach(book => { %>
+        <li class="card">
+          <% if (book.bookImage) { %>
+            <img src="/<%= book.bookImage %>" alt="<%= book.BookName %>">
+          <% } %>
+
+          <div class="book-info">
+            <strong>Book Name:</strong> <%= book.BookName %><br>
+            <strong>Author:</strong> <%= book.Author %><br>
+            <strong>Added by:</strong> <%= book.owner.username %>
+          </div>
+
+          <a href="/books/<%= book._id %>">View All Quotes</a>
+        </li>
+      <% }) %>
+    </ul>
+
+    <a href="/books/new" class="add-btn">➕ Add New Book</a>
+  </div>
+
+</body>
+</html>
 
 
-<h1>Here's all the Books 📚</h1>
-<ul>
-  <% books.forEach(book => { %>
-    <li>
-        <%= book.bookImage %><br>
-      <br>
-      Book name: <%= book.BookName %> <br>
-      Autor: <%= book.Author %> <br>
-      Add by
-      <%= book.owner.username %> <br>
-      <a href="/books/<%= book._id %>">View all Quotes</a> <br><br>
-  <% }) %>
-</ul>
-<br><br><br>
-<a href="/books/new">Add a new book</a>

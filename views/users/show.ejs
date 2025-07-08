@@ -1,46 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Profile</title>
-  </head>
-  <body>
-    <%- include('../partials/_navbar.ejs') %>
-    <h1>Profile</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Profile</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+  <%- include('../partials/_navbar.ejs') %>
 
-  
-    <h2>My Listings  📚</h2>
-    <p>
-      You Post <%= myListings.length %> 
-      <%= myListings.length === 1 ? 'book.' : 'books.' %>
-    </p>
+  <div class="container">
+    <h1>My Profile</h1>
 
-    <ul>
-      <% myListings.forEach((listing) => { %>
-        <li>
-          Book name <%= listing.BookName %>  by <%= listing.Author %>.
-          <a href="/books/<%= listing._id %>">View all Quotes.</a>
-        </li>
-      <% }) %>
-    </ul>
+    <section class="profile-section">
+      <h2>My Listings 📚</h2>
+      <p>
+        You Post <%= myListings.length %> 
+        <%= myListings.length === 1 ? 'book.' : 'books.' %>
+      </p>
 
-
-
-    <h2>My Favorites  📘📖 </h2>
-    <p>
-      You liked <%= myFavoriteListings.length %>
-      <%= myFavoriteListings.length === 1 ? 'book.' : 'books.' %>
-    </p>
-
-    <ul>
-         <% myFavoriteListings.forEach((listing) => { %>
-    <li>
-         Book name <%= listing.BookName %> by <%= listing.Author %>.
-         <a href="/books/<%= listing._id %>">View all Quotes.</a>
-    </li>
+      <% if (myListings.length > 0) { %>
+      <ul class="listing-list">
+        <% myListings.forEach((listing) => { %>
+          <li class="listing-item">
+            <strong><%= listing.BookName %></strong> by <em><%= listing.Author %></em>.
+            <a href="/books/<%= listing._id %>" class="link-btn">View all Quotes</a>
+          </li>
         <% }) %>
-    </ul>
-  
-  </body>
+      </ul>
+      <% } else { %>
+        <p>No books posted yet.</p>
+      <% } %>
+    </section>
+
+    <section class="profile-section">
+      <h2>My Favorites 📘📖</h2>
+      <p>
+        You liked <%= myFavoriteListings.length %>
+        <%= myFavoriteListings.length === 1 ? 'book.' : 'books.' %>
+      </p>
+
+      <% if (myFavoriteListings.length > 0) { %>
+      <ul class="listing-list">
+        <% myFavoriteListings.forEach((listing) => { %>
+          <li class="listing-item">
+            <strong><%= listing.BookName %></strong> by <em><%= listing.Author %></em>.
+            <a href="/books/<%= listing._id %>" class="link-btn">View all Quotes</a>
+          </li>
+        <% }) %>
+      </ul>
+      <% } else { %>
+        <p>No favorite books yet.</p>
+      <% } %>
+    </section>
+  </div>
+
+</body>
 </html>

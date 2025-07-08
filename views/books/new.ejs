@@ -1,30 +1,42 @@
-<%- include('../partials/_navbar.ejs') %>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add a New Book</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
 
-<h1>Add a new Book  📖</h1>
-  
-  <form method="POST" action="/books">
+  <%- include('../partials/_navbar.ejs') %>
 
-    <label for="bookImage">book Image :</label>
-    <input type="file" name="bookImage" ><br> 
-    
-    
-    <br>
+  <div class="form-container">
+    <h1>Add a New Book 📖</h1>
 
-    <label for="BookName">Book Name:</label>
-    <input type="text" name="BookName" id="BookName" required/>
-    <br>
+    <form action="/books" method="POST" enctype="multipart/form-data">
+      
+      <div class="form-group">
+        <label for="bookImage">📸 Book Image</label>
+        <input type="file" name="bookImage" id="bookImage" accept="image/*" />
+      </div>
 
-    <label for="Author">Author:</label>
-    <input type="text" name="Author" id="Author" required/>
-    <br>
+      <div class="form-group">
+        <label for="BookName">📘 Book Name</label>
+        <input type="text" name="BookName" id="BookName" required />
+      </div>
 
+      <div class="form-group">
+        <label for="Author">✍️ Author</label>
+        <input type="text" name="Author" id="Author" required />
+      </div>
 
+      <div class="form-group">
+        <label for="bookQuotes">💬 Quote (Optional)</label>
+        <input type="text" name="bookQuotes" id="bookQuotes" placeholder="Type a beautiful quote..." />
+      </div>
 
-    
-    <label for="bookQuotes:">Quotes:</label>
-    <input type="text" name="bookQuotes" id="bookQuotes:" />
-    <br>
-    
-    <button type="submit">Add Book</button>
-  </form>
+      <button type="submit" class="submit-btn">Add Book</button>
+    </form>
+  </div>
+
+</body>
+</html>

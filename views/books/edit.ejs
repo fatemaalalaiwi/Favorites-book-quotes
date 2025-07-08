@@ -1,38 +1,48 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit <%= myBook.name %></title>
-  </head>
-  <body>
-    <%- include('../partials/_navbar.ejs') %>
-    <h1>Edit a Book!</h1>
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Book</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
 
+  <%- include('../partials/_navbar.ejs') %>
 
+  <div class="form-container">
+    <h1>Edit Book ✏️</h1>
 
-   <form action="/books/<%= myBook._id %>?_method=PUT" method="POST">
-    <label for="bookImage">book Image:</label>
-    <input type="file" name="image" accept="image/*" required class="custom-file-input"/>
-    
-    
-    <br>
+    <form action="/books/<%= book._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
 
-    <label for="BookName">Book Name:</label>
-    <input type="text" name="BookName" id="BookName" value="<%= myBook.BookName %>"/>
-    <br>
+      <div class="form-group">
+        <label for="BookName">📘 Book Name</label>
+        <input type="text" name="BookName" id="BookName" value="<%= book.BookName %>" required />
+      </div>
 
-    <label for="Author">Author:</label>
-    <input type="text" name="Author" id="Author"  value="<%= myBook.Author %>" />
-    <br>
+      <div class="form-group">
+        <label for="Author">✍️ Author</label>
+        <input type="text" name="Author" id="Author" value="<%= book.Author %>" required />
+      </div>
 
-    <label for="bookQuotes:">bookQuotes:</label>
-    <input type="text" name="bookQuotes" id="bookQuotes"  value="<%= myBook.bookQuotes %>"/>
-    <br>
-    
-    <button type="submit">Update Book</button>
-  </form>
+      <div class="form-group">
+        <label>📸 Current Book Image</label><br>
+        <% if (book.bookImage) { %>
+          <img src="/<%= book.bookImage %>" alt="Book Image" style="max-width: 200px; border-radius: 15px; margin-top: 10px;" />
+        <% } else { %>
+          <p>No image uploaded.</p>
+        <% } %>
+      </div>
 
-  </body>
+      <div class="form-group">
+        <label for="bookImage">Upload New Image</label>
+        <input type="file" name="bookImage" id="bookImage" accept="image/*" />
+      </div>
+
+      <button type="submit" class="submit-btn">Save Changes</button>
+      <a href="/books/<%= book._id %>" class="cancel-btn">Cancel</a>
+
+    </form>
+  </div>
+
+</body>
 </html>

@@ -39,6 +39,9 @@ app.use(
 );
 app.use(passUserToView);
 
+// for imges
+app.use(express.static('public'));
+
 // GET (index page)
 app.get("/", async(req, res) => {
   res.render("index.ejs", {

@@ -1,66 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add a New Book</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+
 <body>
+
+
   <%- include('../partials/_navbar.ejs') %>
 
-  <!-- display All Quotes -->
-     
- 
+  <div class="container">
+    <h1><%= myBook.BookName %></h1>
+    <p><strong>Author:</strong> <%= myBook.Author %></p>
 
+    <% if (myBook.bookImage) { %>
+      <img class="book-cover" src="/<%= myBook.bookImage %>" alt="<%= myBook.BookName %>">
+    <% } %>
 
-<h3>Add a Quote to this Book</h3>
+  
+    <!-- هنا يمكن إضافة نموذج إضافة اقتباس إذا أردت -->
 
+    <h2>📚 Quotes for this Book</h2>
 
-   <h2>📚 Quotes for this Book</h2>
-<% if (bookQuotes.length > 0) { %>
-  <ul>
-    <% bookQuotes.forEach(quote => { %>
-      <li>
-        "<%= quote.QuoteLine %>" 
-        
-        <!-- — added by <%= quote.user.username %> <br> -->
-
-
-
-    <% }) %>
-  </ul>
-<% } else { %>
-  <p>No quotes for this book yet.</p>
-<% } %>
-
-
+    <% if (bookQuotes.length > 0) { %>
+      <ul class="quote-list">
+        <% bookQuotes.forEach(quote => { %>
+          <li class="quote-card">
+            “<%= quote.QuoteLine %>”
+            <!-- — added by <%= quote.user.username %> -->
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No quotes for this book yet.</p>
+    <% } %>
 
     <br>
 
-<% if(userHasFavorited) { %>
-    <p>You like this quote!</p>
-    <form action="/books/<%= myBook._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="POST">
-      <button type="submit">dont like !</button>
-    </form>
-  <% } else { %>
-    <p>You Don't like this quote?</p>
-    <form action="/books/<%= myBook._id %>/favorited-by/<%= user._id %>" method="POST">
-        <button type="submit">Like!</button>
+    <% if(userHasFavorited) { %>
+      <p>You like this quote!</p>
+      <form action="/books/<%= myBook._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="like-btn dislike-btn">Don't Like</button>
       </form>
-  <% } %>
+    <% } else { %>
+      <p>You don't like this quote?</p>
+      <form action="/books/<%= myBook._id %>/favorited-by/<%= user._id %>" method="POST">
+        <button type="submit" class="like-btn">Like!</button>
+      </form>
+    <% } %>
 
+    <p>❤️ Liked by <%= myBook.favoritedByUser.length %> people.</p>
 
-<p>❤️ Liked by<%= myBook.favoritedByUser.length %> people.</p>
-
-
-  <h2>Authorization</h2>
-  <% if (myBook.owner._id.equals(user._id)) { %>
-    <p>You own this post. You can edit or delete it</p>
-    <a href="/books/<%= myBook._id %>/edit">Edit this page</a>
-    <form action="/books/<%= myBook._id %>?_method=DELETE" method="POST">
-      <button type="submit">Delete this page</button>
-    </form>
-    
-  <% } else { %>
-    <p>This is not your quote, only <%= myBook.owner.username %>  can edit and delete!</p>
-  <% } %>
+    <h2>Authorization</h2>
+    <% if (myBook.owner._id.equals(user._id)) { %>
+      <p>You own this post. You can edit or delete it</p>
+      <a href="/books/<%= myBook._id %>/edit" class="btn edit-btn">Edit this page</a>
+      <form action="/books/<%= myBook._id %>?_method=DELETE" method="POST" style="margin-top:10px;">
+        <button type="submit" class="btn delete-btn">Delete this page</button>
+      </form>
+    <% } else { %>
+      <p>This is not your quote, only <%= myBook.owner.username %> can edit and delete!</p>
+    <% } %>
+  </div>
 </body>
-
-
-
-
-
-
