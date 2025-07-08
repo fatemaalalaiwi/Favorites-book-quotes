@@ -1,3 +1,5 @@
+This is my final version of the README after merging both.
+
 
 
 # 📚 Favorite Book Quotes
@@ -63,4 +65,5 @@ This step helped me visualize the layout and understand how I wanted the structu
 
 
 
+This is my final version of the README after merging both.
 
