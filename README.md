@@ -20,12 +20,16 @@ A web platform where users can share their favorite books, add quotes they love,
 
 ## 🛠️ Technologies Used
 
-- Node.js + Express.js
-- MongoDB + Mongoose
+###  I developed my project using the MEN Stack
+
+- MongoDB 
+- Express.js
+- Node.js
 - EJS (Embedded JavaScript Templates)
 - HTML, CSS, custom styling
 - Multer (for image uploads)
-- express-session (for auth)
+- bcrypt (securely hash user passwords)
+
 
 
 
@@ -65,5 +69,61 @@ This step helped me visualize the layout and understand how I wanted the structu
 
 
 
-This is my final version of the README after merging both.
+***
 
+
+## The Main Features in Book Quotes Platform
+
+ 🖼️ **User Interface**  
+ I designed a clean and simple interface to make the experience easy and enjoyable.
+
+![User Interface](public/Screen/interface.png)
+
+
+ 🔐 **User Authentication**  
+Users can register and log in securely.  
+Passwords are hashed using `bcrypt` to protect user data.
+
+
+![Welcome Page](public/Screen/Page1.png)
+
+![Create new account](public/Screen/Page2.png)
+
+![Sign in](public/Screen/Page3.png)
+
+
+
+ 📚 **Add a Book**  
+ Users can upload book covers and enter the book's name and author name .
+
+![Add button](public/Screen/add1.png)
+![Add page](public/Screen/add2.png)
+
+
+ 💬 **Add Quotes**  
+
+Users can add their favorite quotes and connect them to specific books.  
+This helps in organizing quotes based on the book source.
+
+ ![addQuote](public/Screen/addQuote.png)
+
+🔄 **Update Feature** 
+
+Users can update or edit the name of book , Autor name or book image.  
+This is useful if they want to fix a typo .
+
+ ![Update](public/Screen/edit1.png)
+  ![Update](public/Screen/edit2.png)
+
+ ❤️ **Like Feature**  
+ Other users can like quotes, and the total number of likes is saved and shown.
+
+  ![like](public/Screen/like.png)
+
+   ![dont like](public/Screen/dontLike.png)
+
+
+👤 **User Profile Page**  
+Each user has a personal profile page where they can view the books they have added, as well as the books and quotes they have liked
+
+![Profile](public/Screen/profile1.png)
