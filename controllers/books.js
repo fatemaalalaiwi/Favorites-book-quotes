@@ -20,10 +20,7 @@ const Book = require('../models/Book');
 const Quote = require('../models/Quote');
 
 // API
-// using (.populate)option when i have one to many
-
-
-
+// using (.populate)option when i have one to many (bring the owner of each book)
 
 //read all -index page
 router.get('/', async (req,res)=> {
@@ -42,13 +39,14 @@ router.get('/new', async(req,res) =>{
 
 
 // post new book and also Quotes
+// 'bookImage' is the name in the form
 router.post('/', upload.single('bookImage'), async (req, res) => {
   try {
     const { BookName, Author } = req.body;
 
     // to store the image in DB
     const bookImage = req.file ? 'uploads/' + req.file.filename : '';
-
+   //for new book
     const newBook = new Book({
       BookName,
       Author,
@@ -58,17 +56,18 @@ router.post('/', upload.single('bookImage'), async (req, res) => {
 
     await newBook.save();
 
+// .trim() // removed all spacedd before and after the line
     if (req.body.bookQuotes && req.body.bookQuotes.trim() !== '') {
       const Quote = require('../models/Quote');
 
-      // إنشاء اقتباس جديد
+      // for new Quote
       const newQuote = await Quote.create({
         QuoteLine: req.body.bookQuotes, 
         book: newBook._id,
         user: req.session.user._id,
       });
 
-      // ربط الاقتباس بالكتاب
+      // link the book with quote
       newBook.bookQuotes.push(newQuote._id);
       await newBook.save();
     }
@@ -76,24 +75,27 @@ router.post('/', upload.single('bookImage'), async (req, res) => {
     res.redirect('/books');
   } catch (err) {
     console.error('Error adding book:', err);
-    res.status(500).send('Something went wrong while adding the book.');
+
   }
 });
 
 
 
 // Read one - show page
-//  we’ll need to populate() the owner path anytime we wish to display information about an owner beyond an ObjectId.
+// This finds a specific book in the database using the ID
+//  we’ll need to populate()  display information about an owner beyond an ObjectId.
 router.get("/:bookId", async (req,res)=>{
          const myBook = await Book.findById(req.params.bookId).populate('owner');
 
 // use it to display quotes in view
+// it searches the database for all quotes that are linked to a specific book
          const bookQuotes = await Quote.find({ book: req.params.bookId }).populate('user');
 
 
-// The some() array method returns true if at least one element passes the test 
+// The some() array method returns true if at least one element passes the test (search in the DB)
         const userHasFavorited = myBook.favoritedByUser.some((user)=>
-        user.equals(req.session.user._id)
+        // Check if the currently logged-in user is in the list of users who favorited this book
+          user.equals(req.session.user._id)
     );
 
 
@@ -114,6 +116,7 @@ router.get("/:bookId", async (req,res)=>{
 router.delete('/:bookId', async (req, res) => {
   try {
     const myBook = await Book.findById(req.params.bookId);
+  // delete the book only if the current user is the owner of the book.
     if (myBook.owner.equals(req.session.user._id)) {
       await myBook.deleteOne();
       res.redirect('/books');
@@ -130,6 +133,7 @@ router.delete('/:bookId', async (req, res) => {
 // PUT - Update -get
 router.get('/:bookId/edit', async (req, res) => {
   try {
+    // it will finds the book in the database by using the bookId 
     const currentBook = await Book.findById(req.params.bookId);
     res.render('books/edit.ejs', {
       book: currentBook,
@@ -155,22 +159,21 @@ router.put('/:bookId',upload.single('bookImage') ,async (req, res) => {
     } else {
       res.send("You don't have permission to do that.");
     }
-       const updateData = {
+       
+    const updateData = {
       BookName: req.body.BookName,
       Author: req.body.Author,
     };
-
-    // إذا رفعت صورة جديدة، ضفها
     if (req.file) {
       updateData.bookImage = 'uploads/' + req.file.filename;
     }
 
-    // نفذ التحديث
+    // this will do the update booke from DB with new info
     await Book.findByIdAndUpdate(req.params.bookId, updateData, { new: true });
 
-    // إعادة التوجيه لصفحة تفاصيل الكتاب
-    res.redirect(`/books/${req.params.bookId}`);
-
+    
+    // res.redirect(`/books/${req.params.bookId}`);
+    res.redirect('/books')
 
   } catch (error) {
     console.log(error);
@@ -183,7 +186,7 @@ router.put('/:bookId',upload.single('bookImage') ,async (req, res) => {
 // The $push operator is used to add a new value to an array
 router.post('/:bookId/favorited-by/:userId', async (req,res)=>{
     await Book.findByIdAndUpdate(req.params.bookId, {
-    $push:{favoritedByUser: req.params.userId}
+      $push:{favoritedByUser: req.params.userId}
 }) ;
 res.redirect(`/books/${req.params.bookId}`);
 });

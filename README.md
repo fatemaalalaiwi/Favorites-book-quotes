@@ -127,3 +127,21 @@ This is useful if they want to fix a typo .
 Each user has a personal profile page where they can view the books they have added, as well as the books and quotes they have liked
 
 ![Profile](public/Screen/profile1.png)
+
+
+## Online Resources
+
+ * [GA](https://generalassembly.instructure.com/) :  it guides me building a MEN (MongoDB, Express.js, Node.js) stack application .
+ 
+ * [npm](https://www.npmjs.com/package/multer) : help me for using multer.
+
+ * [Medium](https://ehssanelmedkouri.medium.com/my-favorite-quotes-from-your-second-life-begins-when-you-realize-you-only-have-one-ca39e283ca0f): ideas and information.
+
+ * [unsplash](https://unsplash.com/s/photos/book-background): the cute bachground in my app.
+
+
+
+
+
+
+

@@ -6,20 +6,7 @@ const Quote = require('../models/Quote');
 
 
 
-
-// // edit(Quote)
-// router.put('/:quoteId', async (req, res) => {
-//   try {
-//     const { QuoteLine } = req.body;
-//     await Quote.findByIdAndUpdate(req.params.quoteId, { QuoteLine });
-//     res.redirect('back');
-//   } catch (err) {
-//     console.error(err);
-//     res.redirect('/');
-//   }
-// });
-
-
+//  like
 
 router.post('/:quoteId/like', async (req, res) => {
   try {
@@ -39,7 +26,7 @@ router.post('/:quoteId/like', async (req, res) => {
   }
 });
 
-
+// remove the like
 
 router.post('/:quoteId/unlike', async (req, res) => {
   try {
