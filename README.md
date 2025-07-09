@@ -1,5 +1,3 @@
-This is my final version of the README after merging both.
-
 
 
 # 📚 Favorite Book Quotes
