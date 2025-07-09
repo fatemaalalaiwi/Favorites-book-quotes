@@ -83,11 +83,11 @@ Users can register and log in securely.
 Passwords are hashed using `bcrypt` to protect user data.
 
 
-![Welcome Page](public/Screen/Page1.png)
+![Welcome Page](public/Screen/page1.png)
 
-![Create new account](public/Screen/Page2.png)
+![Create new account](public/Screen/page2.png)
 
-![Sign in](public/Screen/Page3.png)
+![Sign in](public/Screen/page3.png)
 
 
 
