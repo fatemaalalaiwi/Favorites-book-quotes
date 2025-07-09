@@ -1,7 +1,7 @@
 const router = require('express').Router()
+
+
 const multer = require('multer');
-
-
 const path = require('path');
 
 // تحديد مكان حفظ الصور
@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads'); // داخل مجلد public
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // اسم فريد
+    cb(null, Date.now() + path.extname(file.originalname)); 
   }
 });
 const upload = multer({ storage: storage });
