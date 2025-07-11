@@ -13,7 +13,9 @@
 <%- include('../partials/_navbar.ejs') %>
   <div class="container">
     <h1>Books Library</h1>
-    
+     
+   <a href="/books/new" class="add-btn">➕ Add New Book</a>
+   
     <ul class="book-list">
       <% books.forEach(book => { %>
         <li class="card">
