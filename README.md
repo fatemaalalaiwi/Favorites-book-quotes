@@ -31,7 +31,7 @@ A web platform where users can share their favorite books, add quotes they love,
 
 
 
-[Live Demo](https://github.com/fatemaalalaiwi/Favorites-book-quotes.git)
+[Live Demo](https://favorites-book-quotes.onrender.com)
 
 
 ### Here are some details about the implementation of my project
